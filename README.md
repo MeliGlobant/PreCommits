@@ -11,71 +11,71 @@ To contribute to this repository, you must install the pre-commit framework and 
 ### Prerequisites (MacOS)
 Install the framework and the Terraform validation suite using Homebrew:
 
-# 1. Install the pre-commit framework using Homebrew
-brew install pre-commit
+1. Install the pre-commit framework using Homebrew
+   `brew install pre-commit`
 
-# 2. Install Terraform, TFLint, Checkov and Trivy
-brew install terraform tflint checkov trivy
+2. Install Terraform, TFLint, Checkov and Trivy
+   `brew install terraform tflint checkov trivy`
 
-# 3. Verify the installation to ensure the command is available
-pre-commit --version
+3. Verify the installation to ensure the command is available
+   `pre-commit --version`
 
-# 4. Navigate to your repository folder
-cd your-repo-name
+4. Navigate to your repository folder
+   `cd your-repo-name`
 
-# 5. Initialize the local git hooks (this links git commit with pre-commit)
-pre-commit install
+5. Initialize the local git hooks (this links git commit with pre-commit)
+   `pre-commit install`
 
-# 6. Initialize the specific hook for commit messages (to enable commitlint)
-pre-commit install --hook-type commit-msg
+6. Initialize the specific hook for commit messages (to enable commitlint)
+   `pre-commit install --hook-type commit-msg`
 
-# 7. (Optional) Run the hooks against all files to ensure everything is clean
-pre-commit run --all-files
+7. (Optional) Run the hooks against all files to ensure everything is clean
+   `pre-commit run --all-files`
 
-# 8. IMPORTANT: Initialize TFLint AWS plugin (one time per repository)
-#    This step is required to download the AWS rulesets referenced in .tflint.hcl
-tflint --init
+8. IMPORTANT: Initialize TFLint AWS plugin (one time per repository).
+   This step is required to download the AWS rulesets referenced in `.tflint.hcl`.
+   `tflint --init`
 
-# 9. OPTIONAL but recommended: Initialize Terraform providers (one time per repository)
-terraform init
+9. OPTIONAL but recommended: Initialize Terraform providers (one time per repository).
+   `terraform init`
 
 ### Prerequisites (Linux)
 Install the framework using pip with a virtual environment, and install the Terraform validation tools:
 
-# 1. Create a virtual environment
-python3 -m venv .venv
+1. Create a virtual environment
+   `python3 -m venv .venv`
 
-# 2. Activate the virtual environment
-source .venv/bin/activate
+2. Activate the virtual environment
+   `source .venv/bin/activate`
 
-# 3. Install dependencies from requirements file (includes pre-commit)
-pip install -r requirements-dev.txt
+3. Install dependencies from requirements file (includes pre-commit)
+   `pip install -r requirements-dev.txt`
 
-# 4. Install Terraform, TFLint, Checkov and Trivy
-#    Use your Linux package manager or the official installation guides
-#    to install terraform, tflint, checkov and trivy.
+4. Install Terraform, TFLint, Checkov and Trivy.
+   Use your Linux package manager or the official installation guides
+   to install `terraform`, `tflint`, `checkov` and `trivy`.
 
-# 5. Verify the installation to ensure the command is available
-pre-commit --version
+5. Verify the installation to ensure the command is available
+   `pre-commit --version`
 
-# 6. Navigate to your repository folder
-cd your-repo-name
+6. Navigate to your repository folder
+   `cd your-repo-name`
 
-# 7. Initialize the local git hooks (this links git commit with pre-commit)
-pre-commit install
+7. Initialize the local git hooks (this links git commit with pre-commit)
+   `pre-commit install`
 
-# 8. Initialize the specific hook for commit messages (to enable commitlint)
-pre-commit install --hook-type commit-msg
+8. Initialize the specific hook for commit messages (to enable commitlint)
+   `pre-commit install --hook-type commit-msg`
 
-# 9. (Optional) Run the hooks against all files to ensure everything is clean
-pre-commit run --all-files
+9. (Optional) Run the hooks against all files to ensure everything is clean
+   `pre-commit run --all-files`
 
-# 10. IMPORTANT: Initialize TFLint AWS plugin (one time per repository)
-#     This step is required to download the AWS rulesets referenced in .tflint.hcl
-tflint --init
+10. IMPORTANT: Initialize TFLint AWS plugin (one time per repository).
+    This step is required to download the AWS rulesets referenced in `.tflint.hcl`.
+    `tflint --init`
 
-# 11. OPTIONAL but recommended: Initialize Terraform providers (one time per repository)
-terraform init
+11. OPTIONAL but recommended: Initialize Terraform providers (one time per repository).
+    `terraform init`
 
 ### Terraform validation tools overview
 
