@@ -14,23 +14,33 @@ Install the framework and the Terraform validation suite using Homebrew:
 # 1. Install the pre-commit framework using Homebrew
 brew install pre-commit
 
-# 2. Verify the installation to ensure the command is available
+# 2. Install Terraform, TFLint, Checkov and Trivy
+brew install terraform tflint checkov trivy
+
+# 3. Verify the installation to ensure the command is available
 pre-commit --version
 
-# 3. Navigate to your repository folder
+# 4. Navigate to your repository folder
 cd your-repo-name
 
-# 4. Initialize the local git hooks (this links git commit with pre-commit)
+# 5. Initialize the local git hooks (this links git commit with pre-commit)
 pre-commit install
 
-# 5. Initialize the specific hook for commit messages (to enable commitlint)
+# 6. Initialize the specific hook for commit messages (to enable commitlint)
 pre-commit install --hook-type commit-msg
 
-# 6. (Optional) Run the hooks against all files to ensure everything is clean
+# 7. (Optional) Run the hooks against all files to ensure everything is clean
 pre-commit run --all-files
 
+# 8. IMPORTANT: Initialize TFLint AWS plugin (one time per repository)
+#    This step is required to download the AWS rulesets referenced in .tflint.hcl
+tflint --init
+
+# 9. OPTIONAL but recommended: Initialize Terraform providers (one time per repository)
+terraform init
+
 ### Prerequisites (Linux)
-Install the framework using pip with a virtual environment:
+Install the framework using pip with a virtual environment, and install the Terraform validation tools:
 
 # 1. Create a virtual environment
 python3 -m venv .venv
@@ -38,23 +48,43 @@ python3 -m venv .venv
 # 2. Activate the virtual environment
 source .venv/bin/activate
 
-# 3. Install dependencies from requirements file
+# 3. Install dependencies from requirements file (includes pre-commit)
 pip install -r requirements-dev.txt
 
-# 4. Verify the installation to ensure the command is available
+# 4. Install Terraform, TFLint, Checkov and Trivy
+#    Use your Linux package manager or the official installation guides
+#    to install terraform, tflint, checkov and trivy.
+
+# 5. Verify the installation to ensure the command is available
 pre-commit --version
 
-# 5. Navigate to your repository folder
+# 6. Navigate to your repository folder
 cd your-repo-name
 
-# 6. Initialize the local git hooks (this links git commit with pre-commit)
+# 7. Initialize the local git hooks (this links git commit with pre-commit)
 pre-commit install
 
-# 7. Initialize the specific hook for commit messages (to enable commitlint)
+# 8. Initialize the specific hook for commit messages (to enable commitlint)
 pre-commit install --hook-type commit-msg
 
-# 8. (Optional) Run the hooks against all files to ensure everything is clean
+# 9. (Optional) Run the hooks against all files to ensure everything is clean
 pre-commit run --all-files
+
+# 10. IMPORTANT: Initialize TFLint AWS plugin (one time per repository)
+#     This step is required to download the AWS rulesets referenced in .tflint.hcl
+tflint --init
+
+# 11. OPTIONAL but recommended: Initialize Terraform providers (one time per repository)
+terraform init
+
+### Terraform validation tools overview
+
+The following tools are executed through pre-commit to validate your Terraform code:
+
+- **terraform fmt / validate**: Formats Terraform files and checks that configuration is syntactically valid and internally consistent.
+- **TFLint**: Lints Terraform code to detect potential issues such as deprecated syntax, wrong argument types, unused declarations, and provider-specific problems.
+- **Checkov**: Performs static security scanning of Terraform to detect misconfigurations against security best practices and compliance policies.
+- **Trivy (IaC scanning)**: Scans Terraform for security vulnerabilities and misconfigurations, complementing Checkov with additional rules and checks.
 
 ## Commit Message Format
 

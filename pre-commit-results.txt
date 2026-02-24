@@ -1,0 +1,335 @@
+trim trailing whitespace.................................................Failed
+- hook id: trailing-whitespace
+- exit code: 1
+- files were modified by this hook
+
+Fixing main.tf
+
+fix end of files.........................................................Failed
+- hook id: end-of-file-fixer
+- exit code: 1
+- files were modified by this hook
+
+Fixing main.tf
+
+check yaml...............................................................Passed
+check for added large files..............................................Passed
+Terraform fmt............................................................Failed
+- hook id: terraform_fmt
+- files were modified by this hook
+
+main.tf
+
+Terraform validate.......................................................Passed
+Terraform validate with tflint...........................................Failed
+- hook id: terraform_tflint
+- exit code: 2
+
+[0m[32mCommand 'tflint --init' successfully done:[0m
+All plugins are already installed
+
+
+
+[0m[33mTFLint in ./:[0m
+2 issue(s) found:
+
+Warning: terraform "required_version" attribute is required (terraform_required_version)
+
+  on main.tf line 1:
+
+Reference: https://github.com/terraform-linters/tflint-ruleset-terraform/blob/v0.14.1/docs/rules/terraform_required_version.md
+
+Warning: Missing version constraint for provider "aws" in `required_providers` (terraform_required_providers)
+
+  on main.tf line 9:
+   9: resource "aws_instance" "example" {
+
+Reference: https://github.com/terraform-linters/tflint-ruleset-terraform/blob/v0.14.1/docs/rules/terraform_required_providers.md
+
+Checkov..................................................................Failed
+- hook id: terraform_checkov
+- exit code: 1
+
+_               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By Prisma Cloud | version: 3.2.500
+Update available 3.2.500 -> 3.2.506
+Run pip3 install -U checkov to update
+
+
+terraform scan results:
+
+Passed checks: 3, Failed checks: 4, Skipped checks: 0
+
+Check: CKV_AWS_93: "Ensure S3 bucket policy does not lockout all but root user. (Prevent lockouts needing root account fixes)"
+	PASSED for resource: aws_s3_bucket.test_bucket
+	File: /main.tf:2-6
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-24
+Check: CKV_AWS_88: "EC2 instance should not have public IP."
+	PASSED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/public-policies/public-12
+Check: CKV_AWS_46: "Ensure no hard-coded secrets exist in EC2 user data"
+	PASSED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/secrets-policies/bc-aws-secrets-1
+Check: CKV_AWS_79: "Ensure Instance Metadata Service Version 1 is not enabled"
+	FAILED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/bc-aws-general-31
+
+		9  | resource "aws_instance" "example" {
+		10 |   ami           = "ami-0c55b159cbfafe1f0"
+		11 |   instance_type = "t2.micro"
+		12 |
+		13 |   # TODO: Add required tags (Owner, Environment)
+		14 | }
+
+Check: CKV_AWS_126: "Ensure that detailed monitoring is enabled for EC2 instances"
+	FAILED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/ensure-that-detailed-monitoring-is-enabled-for-ec2-instances
+
+		9  | resource "aws_instance" "example" {
+		10 |   ami           = "ami-0c55b159cbfafe1f0"
+		11 |   instance_type = "t2.micro"
+		12 |
+		13 |   # TODO: Add required tags (Owner, Environment)
+		14 | }
+
+Check: CKV_AWS_135: "Ensure that EC2 is EBS optimized"
+	FAILED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-ec2-is-ebs-optimized
+
+		9  | resource "aws_instance" "example" {
+		10 |   ami           = "ami-0c55b159cbfafe1f0"
+		11 |   instance_type = "t2.micro"
+		12 |
+		13 |   # TODO: Add required tags (Owner, Environment)
+		14 | }
+
+Check: CKV_AWS_8: "Ensure all data stored in the Launch configuration or instance Elastic Blocks Store is securely encrypted"
+	FAILED for resource: aws_instance.example
+	File: /main.tf:9-14
+	Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/general-13
+
+		9  | resource "aws_instance" "example" {
+		10 |   ami           = "ami-0c55b159cbfafe1f0"
+		11 |   instance_type = "t2.micro"
+		12 |
+		13 |   # TODO: Add required tags (Owner, Environment)
+		14 | }
+
+Terraform validate with trivy............................................Failed
+- hook id: terraform_trivy
+- exit code: 1
+
+2026-02-24T11:22:51-05:00	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-02-24T11:22:51-05:00	INFO	[checks-client] Using existing checks from cache	path="/Users/melissa.villena/Library/Caches/trivy/policy/content"
+2026-02-24T11:22:52-05:00	INFO	[terraform scanner] Scanning root module	file_path="."
+2026-02-24T11:22:52-05:00	INFO	Detected config files	num=2
+
+Report Summary
+
+┌─────────┬───────────┬───────────────────┐
+│ Target  │   Type    │ Misconfigurations │
+├─────────┼───────────┼───────────────────┤
+│ .       │ terraform │         0         │
+├─────────┼───────────┼───────────────────┤
+│ main.tf │ terraform │        10         │
+└─────────┴───────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+main.tf (terraform)
+===================
+Tests: 10 (SUCCESSES: 0, FAILURES: 10)
+Failures: 10 (UNKNOWN: 0, LOW: 2, MEDIUM: 1, HIGH: 7, CRITICAL: 0)
+
+AWS-0028 (HIGH): Instance does not require IMDS access to require a token.
+════════════════════════════════════════
+IMDS v2 (Instance Metadata Service) introduced session authentication tokens which improve security when talking to IMDS.
+
+By default <code>aws_instance</code> resource sets IMDS session auth tokens to be optional.
+
+To fully protect IMDS you need to enable session tokens by using <code>metadata_options</code> block and its <code>http_tokens</code> variable set to <code>required</code>.
+
+
+See https://avd.aquasec.com/misconfig/aws-0028
+────────────────────────────────────────
+ main.tf:9-14
+────────────────────────────────────────
+   9 ┌ resource "aws_instance" "example" {
+  10 │   ami           = "ami-0c55b159cbfafe1f0"
+  11 │   instance_type = "t2.micro"
+  12 │
+  13 │   # TODO: Add required tags (Owner, Environment)
+  14 └ }
+────────────────────────────────────────
+
+
+AWS-0086 (HIGH): No public access block so not blocking public acls
+════════════════════════════════════════
+S3 buckets should block public ACLs on buckets and any objects they contain. By blocking, PUTs with fail if the object has any public ACL a.
+
+
+See https://avd.aquasec.com/misconfig/aws-0086
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0087 (HIGH): No public access block so not blocking public policies
+════════════════════════════════════════
+S3 bucket policy should have block public policy to prevent users from putting a policy that enable public access.
+
+
+See https://avd.aquasec.com/misconfig/aws-0087
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0089 (LOW): Bucket has logging disabled
+════════════════════════════════════════
+Ensures S3 bucket logging is enabled for S3 buckets
+
+See https://avd.aquasec.com/misconfig/aws-0089
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0090 (MEDIUM): Bucket does not have versioning enabled
+════════════════════════════════════════
+Versioning in Amazon S3 is a means of keeping multiple variants of an object in the same bucket.
+
+You can use the S3 Versioning feature to preserve, retrieve, and restore every version of every object stored in your buckets.
+
+With versioning you can recover more easily from both unintended user actions and application failures.
+
+When you enable versioning, also keep in mind the potential costs of storing noncurrent versions of objects. To help manage those costs, consider setting up an S3 Lifecycle configuration.
+
+
+See https://avd.aquasec.com/misconfig/aws-0090
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0091 (HIGH): No public access block so not blocking public acls
+════════════════════════════════════════
+S3 buckets should ignore public ACLs on buckets and any objects they contain. By ignoring rather than blocking, PUT calls with public ACLs will still be applied but the ACL will be ignored.
+
+
+See https://avd.aquasec.com/misconfig/aws-0091
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0093 (HIGH): No public access block so not restricting public buckets
+════════════════════════════════════════
+S3 buckets should restrict public policies for the bucket. By enabling, the restrict_public_buckets, only the bucket owner and AWS Services can access if it has a public policy.
+
+
+See https://avd.aquasec.com/misconfig/aws-0093
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0094 (LOW): Bucket does not have a corresponding public access block.
+════════════════════════════════════════
+The "block public access" settings in S3 override individual policies that apply to a given bucket, meaning that all public access can be controlled in one central types for that bucket. It is therefore good practice to define these settings for each bucket in order to clearly define the public access that can be allowed for it.
+
+
+See https://avd.aquasec.com/misconfig/aws-0094
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
+
+
+AWS-0131 (HIGH): Root block device is not encrypted.
+════════════════════════════════════════
+Block devices should be encrypted to ensure sensitive data is held securely at rest.
+
+
+See https://avd.aquasec.com/misconfig/aws-0131
+────────────────────────────────────────
+ main.tf:9-14
+────────────────────────────────────────
+   9 ┌ resource "aws_instance" "example" {
+  10 │   ami           = "ami-0c55b159cbfafe1f0"
+  11 │   instance_type = "t2.micro"
+  12 │
+  13 │   # TODO: Add required tags (Owner, Environment)
+  14 └ }
+────────────────────────────────────────
+
+
+AWS-0132 (HIGH): Bucket does not encrypt data with a customer managed key.
+════════════════════════════════════════
+Encryption using AWS keys provides protection for your S3 buckets. To gain greater control over encryption, such as key rotation, access policies, and auditability, use customer managed keys (CMKs) with SSE-KMS.
+Note that SSE-KMS is not supported for S3 server access logging destination buckets; in such cases, use SSE-S3 instead.
+
+
+See https://avd.aquasec.com/misconfig/aws-0132
+────────────────────────────────────────
+ main.tf:2-6
+────────────────────────────────────────
+   2 ┌ resource "aws_s3_bucket" "test_bucket" {
+   3 │   bucket = "my-test-bucket-99"
+   4 │   # This bucket is insecure: missing encryption and public access block
+   5 │   # Also, the indentation is intentionally wrong to test terraform_fmt
+   6 └ }
+────────────────────────────────────────
