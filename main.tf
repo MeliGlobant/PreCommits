@@ -41,8 +41,11 @@ resource "aws_instance" "example" {
 
   # Compliance: Mandatory tags as defined in User Story AWS-44
   tags = {
-    Name        = "SecureInstance"
-    Environment = "Dev"
-    Owner       = "Melissa"
+    project     = "deap-migration"
+    environment = "dev"
+    managedBy   = "Terraform"
+    owner       = "devops-team"
+    application = "my-app-name"
+    version     = "1.0"
   }
 }

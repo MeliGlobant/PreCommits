@@ -10,5 +10,12 @@ plugin "aws" {
 
 rule "aws_resource_missing_tags" {
   enabled = true
-  tags = ["Owner", "Environment"]
+  tags = [
+    "project",
+    "environment",
+    "managedBy",
+    "owner",
+    "application",
+    "version"
+  ]
 }
