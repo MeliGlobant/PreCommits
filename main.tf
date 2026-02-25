@@ -41,7 +41,7 @@ resource "aws_instance" "example" {
 
   # Compliance: Mandatory tags as defined in User Story AWS-44
   tags = {
-    Name        = "Secure_Instance"
+    Name        = "SecureInstance"
     Environment = "Dev"
     Owner       = "Melissa"
   }
